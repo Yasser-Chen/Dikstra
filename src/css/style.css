@@ -1,0 +1,22 @@
+*{
+    box-sizing: border-box ;
+}
+body{
+    padding: 0px ;
+    margin : 0px ;    
+}
+#map{
+    padding : 0px           ;
+    margin  : 0px           ;
+    width   : 100vw         ;
+    height  : 100vh         ;
+    background-color: gray;  
+}
+
+
+.draggable { 
+    width: 150px;
+    height: 150px;
+    padding: 0.5em; 
+}
+  
