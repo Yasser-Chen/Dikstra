@@ -1,22 +1,93 @@
 *{
     box-sizing: border-box ;
+    font-family: sans-serif;
 }
 body{
     padding: 0px ;
     margin : 0px ;    
+    overflow: hidden;
+
 }
 #map{
     padding : 0px           ;
     margin  : 0px           ;
-    width   : 100vw         ;
+    width   : 100%         ;
     height  : 100vh         ;
-    background-color: gray;  
+    background-color: rgb(15, 73, 25);  
+    z-index: 50;
+    overflow: hidden !important;
 }
 
-
-.draggable { 
-    width: 150px;
-    height: 150px;
-    padding: 0.5em; 
+.draggable , .cercle { 
+    width:          30px;
+    height:         30px;
+    padding:        0.5em; 
+    border-radius:  30px;
+    z-index: 100;
+    background-color: black;
+    color: white;
+    line-height: 15px;
+    text-align: center;
+    position: absolute!important;
+    cursor: pointer;
 }
   
+
+.selected{
+    background-color: brown ;
+}
+
+.path{
+    padding:        1px;
+    border-bottom:  1px black solid;
+    height:         1px;
+    position: absolute;
+    text-align: center  ;
+}
+.words{
+    text-align: center  ;
+    width: 100%;
+    display: block;
+    z-index: 200;
+    color: white;
+    position: absolute;
+}
+
+
+
+
+.path.selected{
+    background-image: url( /images/arrow.png);
+    background-size: contain;
+    background-position: 0 center;
+    height:         30px;
+    background-color: rgba(245, 222, 179, 0);
+    border: 1px solid rgba(0, 0, 0, 0) !important;
+    animation: infinite-background 2s linear infinite;
+  }
+  
+  @keyframes infinite-background {
+    0% {
+      background-position: 0 center;
+    }
+    100% {
+      background-position: 100% center;
+    }
+  }
+
+
+
+
+  .bottom-buttons {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    z-index: 900;
+  }
+  
+  .bottom-buttons button {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
