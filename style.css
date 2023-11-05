@@ -61,7 +61,7 @@ body{
 
 
 .path.selected{
-  background-image: url( /images/arrow.png);
+  background-image: url( arrow.png);
   background-size: contain;
   background-position: 0 center;
   height:         30px;
@@ -80,7 +80,7 @@ body{
 }
 
 .path.selected.reversed{
-  background-image: url( /images/arrow-reversed.png);
+  background-image: url( arrow-reversed.png);
   animation: infinite-background-reversed  2s linear infinite !important;
 }
   
