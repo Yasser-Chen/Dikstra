@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,28 +10,45 @@
 </head>
 <body >
     
-    <div id="map">
+
+<div id="error_toast" class="alert alert-danger toast">
+    <span class="icon" style="cursor: pointer;">&#x2716;</span>
+    <span id="error_message">
+
+    </span>
+</div>
+
+<div id="map">
 
 
 
-        
+    
+</div>
+
+<span class="bottom-buttons">
+    
+                    
+    <button class="btn btn-light btn-sm float-end" onclick="editMap()" >
+        Modifier la carte
+    </button>
+    
+    <div class="form-check form-switch float-end">
+        <input class="form-check-input" type="checkbox" role="switch" onclick="swapMode(this)" id="switchForBackGround">
     </div>
     
-    <span class="bottom-buttons">
-        <button class="btn btn-light" onclick="editMap()" >
-            click me 
-        </button>
-    </span>
+    <span class="btn btn-light help-button" onclick="openHelperMenu();" >?</span>
+    
+</span>
 
-    <script src="/utility-packages/js/jquery-3.6.0.js"></script>
-    <script src="/utility-packages/js/jquery-ui.js"></script>  
-    <script src="/utility-packages/js/bootstrap.min.js" ></script>
+<script src="/utility-packages/js/jquery-3.6.0.js"></script>
+<script src="/utility-packages/js/jquery-ui.js"></script>  
+<script src="/utility-packages/js/bootstrap.min.js" ></script>
 
-    <script src="/utility-packages/js/commonFunctions.js"></script>  
+<script src="/utility-packages/js/commonFunctions.js"></script>  
 
-    <script src="/src/Classes/Link.js"></script>
-    <script src="/src/Classes/Sommet.js"></script>
-    <script src="/src/js/code.js"></script>
+<script src="/src/Classes/Link.js"></script>
+<script src="/src/Classes/Sommet.js"></script>
+<script src="/src/js/code.js"></script>
 
 
 
@@ -41,20 +58,339 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5 text-bold" id="questionnaireAppLabel"> 
-                    Enter details of your map 
+                    Entrez les détails de votre carte
                 </h1>
                 <button type="button" class="btn-close" onclick="$('#questionnaireApp').modal('hide');" ></button>
             </div>
             <div class="modal-body">
-            ... // todo
+                
+                
+                
+                <div class="row">
+
+                    <div class="col-12"><br></div>
+
+                    <div class="col-12" id="section_part1">
+
+                        <table class="table table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <td>
+                                        Nom du point
+                                    </td>
+                                    <td style="width: 90px;">
+                                        Supprimer
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody id="points_placeholder"></tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>
+                                        <input type="text" class="form-control point-css" id="nom_point_pour_creation" autocomplete="off" />
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+
+                    <div class="col-12" id="section_part2">
+
+                        <table class="table table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <td>
+                                        Point debut
+                                    </td>
+                                    <td>
+                                        Point arrivé
+                                    </td>
+                                    <td style="width: 1%;">
+                                        Distance
+                                    </td>
+                                    <td style="width: 90px;">
+                                        Supprimer
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody id="links_placeholder"></tbody>
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <input type="text" class="form-control" id="link_distance_pour_creation" autocomplete="off" />
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+
+                    <div class="col-12"><br></div>
+
+
+                </div>
+
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="$('#questionnaireApp').modal('hide');"  > Close </button>
-                <button type="button" class="btn btn-primary" onclick="generateMap();" > Generate Map </button>
+                <button type="button" class="btn btn-primary" id="btn_Suivant" onclick="finEtape1();" > Suivant </button>
+                <button type="button" class="btn btn-primary" id="btn_Precedant" onclick="retourEtap1();" > Précédant </button>
+                <button type="button" class="btn btn-primary" id="btn_Generate_Map" onclick="generateMap();" > Générer la carte </button>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="helpMenu" data-bs-keyboard="false" tabindex="-1" aria-labelledby="helpMenuLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="helpMenuLabel">Aide</h1>
+                <button type="button" class="btn-close" onclick="$('#helpMenu').modal('hide');" ></button>
+            </div>
+                <div class="modal-body">
+                                        
+
+
+
+
+
+
+
+
+
+
+
+                                        
+                                        
+                    <div class="p">
+
+                        <h1>
+                            Section 1 : Entrez les détails de votre carte
+                        </h1>
+
+                        <br />
+                        <h3>
+                            Étape 1 : Entrez le nom du point
+                        </h3>
+
+                        <br />
+                        Dans cette étape, vous devez entrer le nom de chaque point de votre carte. Le nom du point doit être unique.
+
+                        <br />
+                        <b>Conditions</b>
+                        <br />
+
+                        <ul><li>
+                            Veuillez créer plus d'un seul sommet !
+                        </li></ul>
+                        <br />
+                        Vous devez créer au moins deux sommets pour créer une carte valide.
+                        <br />
+                        <br />
+
+                        <br />
+                        <h3>
+                            Étape 2 : Entrez le point de départ, le point d'arrivée et la distance
+                        </h3>
+
+                        <br />
+                        Dans cette étape, vous devez entrer le point de départ, le point d'arrivée et la distance entre les deux points. Le point de départ doit être différent du point d'arrivée.
+
+                        <br />
+                        <b>
+                            Conditions
+                        </b>
+
+                        <br />
+                        <ul><li>
+                            Veuillez ne pas répéter la même association !
+                        </li></ul>
+                        <br />
+                        Vous ne pouvez pas créer deux associations identiques. Par exemple, vous ne pouvez pas créer une association entre le point A et le point B, puis une autre association entre le point B et le point A.
+                        <br />
+                        <ul><li>
+                            Veuillez ne pas connecter un point avec lui même !
+                        </li></ul>
+                        <br />
+                        Vous ne pouvez pas créer une association entre un point et lui-même.
+
+                        <br />
+
+                        <ul><li>
+                            Veuillez ne pas laisser un sommet isolé !
+                        </li></ul>
+
+                        <br />
+
+                        Chaque sommet doit être connecté à au moins un autre sommet.
+
+                        <br />
+                        <b>
+                            Exemple :
+                        </b>
+
+                        <br />
+
+                        Voici un exemple d'une carte valide :
+
+
+                        <table class="table table-bordered table-sm" >
+                            <tr>
+                                <th>Point de départ </th>
+                                <th>Point d'arrivée </th>
+                                <th>Distance        </th>
+                            </tr>
+                            <tr>
+                                <td>A </td>
+                                <td>B </td>
+                                <td>12</td>
+                            </tr>
+                            <tr>
+                                <td>B </td>
+                                <td>C </td>
+                                <td>8 </td>
+                            </tr>
+                        </table>
+                        <br />
+                        Dans cet exemple, la carte comporte trois sommets : A, B et C. Le point de départ est A, le point d'arrivée est B et la distance entre les deux points est de 10. Le point de départ est ensuite B, le point d'arrivée est C et la distance entre les deux points est de 20.
+
+                        <br />
+                        <br />
+
+                        <b>Remarques :</b>
+                        <ul>
+                            <li>Vous pouvez entrer les informations dans n'importe quel ordre.</li>
+                            <li>Les distances doivent être des nombres entiers.</li>
+                        </ul>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+ 
+
+                        <h1>
+                            Section 2 : Utilisation de la carte
+                        </h1>
+
+                        Pour utiliser la carte, double-cliquez sur un cercle pour le sélectionner. Le cercle sélectionné sera entouré d'une bordure jaune. Une fois que vous avez sélectionné deux points, l'algorithme de recherche de chemin de Kruskal commence à fonctionner. Le chemin le plus court entre les deux points sera mis en évidence en surbrillance. Vous pouvez répéter ce processus autant de fois que vous le souhaitez. Vous pouvez annuler la sélection en cliquant sur un autre élément de la carte. Les associations afficheront des flèches pour indiquer le sens du trajet, car A -> B n'est pas égal à B -> A.
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+
+                        <h1>
+                            Section 3 : Algorithme utilisé
+                        </h1>
+
+                        <br>
+
+                        <p>
+                            L'algorithme de Kruskal est un algorithme de recherche d'arbre couvrant de poids minimum (ARPM). Un arbre couvrant de poids minimum est un arbre qui relie tous les sommets d'un graphe avec le moins de poids possible. L'algorithme de Kruskal fonctionne en sélectionnant d'abord l'arête de poids le plus faible qui ne crée pas de cycle. Ensuite, l'algorithme sélectionne l'arête de poids le plus faible suivante qui ne crée pas de cycle, et ainsi de suite. Ce processus se poursuit jusqu'à ce que tous les sommets soient connectés.
+                        </p>
+
+                        <br>
+                        <br>
+
+                        <b>
+                            Algorithme détaillé
+                        </b>
+                        <ol>
+                            <li>
+                                Trier les arêtes par poids croissant.
+                            </li>
+                            <li>
+                                Initialiser un ensemble de sommets vides.
+                            </li>
+                            <li>
+                                Pour chaque arête, dans l'ordre du poids croissant :
+                                <ul>
+                                    <li>
+                                        Si les deux sommets de l'arête ne sont pas dans le même ensemble de sommets :
+                                        <ul>
+                                            <li>
+                                                Ajouter l'arête à l'arbre couvrant de poids minimum.
+                                            </li>
+                                            <li>
+                                                Union des ensembles de sommets contenant les deux sommets de l'arête.
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ol>
+
+                        <br>
+
+                        <b>
+                            Temps d'exécution
+                        </b>
+                        <br>
+                        <p>
+                            Le temps d'exécution de l'algorithme de Kruskal est de O(E log E), où E est le nombre d'arêtes dans le graphe.
+                        </p>
+
+                        <br>
+
+                        <b>
+                            Applications
+                        </b>
+                        <br>
+                        <p>
+                            L'algorithme de Kruskal a de nombreuses applications, notamment :
+                            <br>
+                            <ul>
+                                <li>
+                                    La conception de réseaux de télécommunications
+                                </li>
+                                <li>
+                                    La construction de routes et de ponts
+                                </li>
+                                <li>
+                                    La planification de circuits imprimés
+                                </li>
+                            </ul>
+                        </p>
+                        <br>
+                        
+                        <b>
+                            Conclusion
+                        </b>
+                        <br>
+                        <p>
+                            L'algorithme de Kruskal est un algorithme efficace pour la recherche d'arbre couvrant de poids minimum. Il est simple à comprendre et à implémenter, et il a un temps d'exécution rapide. L'algorithme de Kruskal a de nombreuses applications pratiques.
+                        </p>
+
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="$('#helpMenu').modal('show');" >Fermer</button>
+                    <button type="button" class="btn btn-primary" onclick="$('#helpMenu').modal('show');" >Bien compris</button>
+                </div>
+        </div>
+    </div>
+</div>   
+
+
 
 </body>
 </html>
