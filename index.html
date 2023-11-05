@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  data-bs-theme="dark">
+<html lang="en"  data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -146,7 +146,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="helpMenu" data-bs-keyboard="false" tabindex="-1" aria-labelledby="helpMenuLabel" aria-hidden="true">
+<div class="modal fade" id="helpMenu" data-bs-keyboard="true" tabindex="-1" aria-labelledby="helpMenuLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-xl">
         <div class="modal-content">
             <div class="modal-header">
@@ -383,8 +383,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="$('#helpMenu').modal('show');" >Fermer</button>
-                    <button type="button" class="btn btn-primary" onclick="$('#helpMenu').modal('show');" >Bien compris</button>
+                    <button type="button" class="btn btn-secondary" onclick="$('#helpMenu').modal('hide');" >Fermer</button>
+                    <button type="button" class="btn btn-primary" onclick="$('#helpMenu').modal('hide');" >Bien compris</button>
                 </div>
         </div>
     </div>

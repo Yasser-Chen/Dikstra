@@ -2,7 +2,8 @@ const display = $('#map');
 var map = [];
 
 if(isDarkMode()){
-    swapMode($(`#switchForBackGround`));
+    $(`#switchForBackGround`)[0].checked = true ;
+    swapMode($(`#switchForBackGround`)[0]);
 }
 
 function initApp(){
@@ -566,7 +567,12 @@ function generateMap(){
             var point1 = findPointByValue($(`#select_for_linking_start_${id}`).val()) ,
                 point2 = findPointByValue($(`#select_for_linking_end_${id}`).val())   ;
 
-            point1.addLink(point2,+distance);                
+            // important to avoid an arrow flipping bug
+            if(point1.nom < point2.nom){
+                point1.addLink(point2,+distance);
+            }else{
+                point2.addLink(point1,+distance);
+            }
             
         }
         
@@ -613,7 +619,7 @@ D.addLink( G ,  4 ) ;
 D.addLink( C ,  7 ) ;
 E.addLink( F ,  5 ) ;
 F.addLink( G ,  2 ) ;
-G.addLink( C ,  3 ) ;
+C.addLink( G ,  3 ) ;
 B.addLink( C ,  5 ) ;
 B.addLink( O ,  5 ) ;
 
